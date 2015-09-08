@@ -31,31 +31,27 @@ def fix_turnstile_data(filenames):
     and the the corresponding updated file in the links below:
 
     Sample input file:
-    https://www.dropbox.com/s/mpin5zv4hgrx244/turnstile_110528.txt
+    https://www.com/s/mpin5zv4hgrx244/turnstile_110528.txt
     Sample updated file:
     https://www.dropbox.com/s/074xbgio4c39b7h/solution_turnstile_110528.txt
     '''
 
     pathF = '/home/laura/Documents/DataScience/Nanodegree/dataScience/lesson2_ps/'
     for filename in filenames:
-        f_in = open(pathF + filename,'rb')
+        f_in = open(pathF + filename,'r')
         f_out = open(pathF + 'updated_' + filename, 'w')
-        #f_in = open(filename,'rb')
-        #f_out = open('update_' + filename, 'w')
+        #f_in = open(filename,'r')
+        #f_out = open('updated_' + filename, 'w')
         reader_in = csv.reader(f_in, delimiter=',')
         writer_out = csv.writer(f_out)
         for line in reader_in:
-            #print line
-            header = line[0:3]
-            len_line = len(line[3:])
+            header = [line[0],line[1],line[2]]
+            len_line = len(line)
             y = 0
             for idx in range(3,len_line):
-                line_last = []
-                 line[idx+y+5-1]
-                print header + line[y+idx:idx+y+5] + line_last
-                writer_out.writerow(header + line[y+idx:idx+y+5])
+                writer_out.writerow(header+line[idx+y:y+idx+5])
                 y += 4
-                if y + 8 >= len_line:
+                if (y+idx+5) >= len_line:
                     break
 
 file1 = 'turnstile_110528.txt'
