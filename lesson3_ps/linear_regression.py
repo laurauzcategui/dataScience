@@ -20,7 +20,14 @@ def linear_regression(features, values):
     ### YOUR CODE GOES HERE ###
     ###########################
 
-    return intercept, params
+    features = sm.add_constant(features)
+
+    model = sm.OLS(values,features)
+    results = model.fit()
+    intercept = results.params[0]
+    parameters = results.params[1:]
+
+    return intercept, parameters
 
 def predictions(dataframe):
     '''
@@ -47,14 +54,14 @@ def predictions(dataframe):
     If you receive a "server has encountered an error" message, that means you are
     hitting the 30-second limit that's placed on running your program. Try using a
     smaller number of features.
-    '''
+    ''' 
     ################################ MODIFY THIS SECTION #####################################
     # Select features. You should modify this section to try different features!             #
     # We've selected rain, precipi, Hour, meantempi, and UNIT (as a dummy) to start you off. #
     # See this page for more info about dummy variables:                                     #
     # http://pandas.pydata.org/pandas-docs/stable/generated/pandas.get_dummies.html          #
     ##########################################################################################
-    features = dataframe[['rain', 'precipi', 'Hour', 'meantempi']]
+    features = dataframe[['meantempi','Hour','meanwindspdi','rain','precipi','fog','meanpressurei']]
     dummy_units = pandas.get_dummies(dataframe['UNIT'], prefix='unit')
     features = features.join(dummy_units)
 
